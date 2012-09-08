@@ -59,7 +59,10 @@ namespace cpuh0g {
 
         vector<Thread*> threads;
         for (i = 0; i < numThreads; ++i) {
-          Thread* t = new Thread();
+          ostringstream name;
+          name << "cpuh0g" << (i + 1);
+
+          Thread* t = new Thread(name.str());
           threads.push_back(t);
         }
 

@@ -14,7 +14,7 @@ using namespace std;
 namespace cpuh0g {
   class Thread {
     public:
-      Thread () : _condition(), _thread(), _attributes(), _killed(0) {
+      Thread (const string& name) : _condition(), _thread(), _attributes(), _name(name), _killed(0) {
         if (0 != ::pthread_attr_init(&_attributes)) {
           throw "cannot create thread attributes";
         }
@@ -32,6 +32,10 @@ namespace cpuh0g {
         ::pthread_attr_destroy(&_attributes);
       }
 
+      const string& getName () const {
+        return _name;
+      }
+
       void start () {
         _condition.broadcast();
       }
@@ -47,6 +51,7 @@ namespace cpuh0g {
       static void* threadStarter (void* data) {
         Thread* thread = (Thread*) data;
 
+        ::prctl(PR_SET_NAME, thread->getName().substr(0, 16).c_str(), 0, 0, 0);
         thread->wait();
         thread->execute();
       }
@@ -69,6 +74,8 @@ namespace cpuh0g {
       pthread_t _thread;
 
       pthread_attr_t _attributes;
+
+      string _name;
 
       volatile sig_atomic_t _killed;
 
