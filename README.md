@@ -5,10 +5,13 @@ Using the additional CPU load caused by the tool, the behavior of other programs
 under load can be checked.
 
 To create the cpuh0g binary, run the following commands:
-./configure
-make
 
-The binary will be created in the bin/ directory.
+    ./configure
+    make
+
+You will need Linux and probably g++ to build it.
+
+When making, the binary will be created in the bin/ directory.
 To run it for 30 seconds with 2 threads, use the following commands:
 bin/cpuh0g --threads 2 --duration 30
 
