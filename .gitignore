@@ -9,3 +9,5 @@ depcomp
 missing
 bin
 .deps
+*.o
+TAGS
